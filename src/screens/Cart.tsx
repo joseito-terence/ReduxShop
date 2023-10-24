@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, Image } from 'react-native';
 import React from 'react';
 import { Text, Card, Button } from 'react-native-paper';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
@@ -23,6 +23,15 @@ export default function Cart() {
           ${cart.reduce((acc, curr) => acc + curr.price, 0)}
         </Text>
       </View>
+
+      {cart.length === 0 && (
+        <Image
+          source={require('../assets/undraw_empty_cart_co35-removebg-preview.png')}
+          resizeMode="contain"
+          style={{ width: '100%' }}
+        />
+      )}
+
       <ScrollView
         contentContainerStyle={{
           rowGap: 16,
