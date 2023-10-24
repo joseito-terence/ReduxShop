@@ -7,17 +7,15 @@
  */
 
 import React from 'react';
-import { StatusBar, useColorScheme, View } from 'react-native';
+import { View } from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
 import Products from './src/screens/Products';
 import Cart from './src/screens/Cart';
+import { useAppSelector } from './src/redux/hooks';
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
     <View style={{ flex: 1 }}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <Navigator />
     </View>
   );
@@ -27,6 +25,8 @@ export default App;
 
 const Navigator = () => {
   const [index, setIndex] = React.useState(0);
+  const cart = useAppSelector(state => state.cart);
+
   const [routes] = React.useState([
     {
       key: 'products',
@@ -39,8 +39,11 @@ const Navigator = () => {
       title: 'Cart',
       focusedIcon: 'cart',
       unfocusedIcon: 'cart-outline',
+      badge: cart.length || false,
     },
   ]);
+
+  routes[1].badge = cart.length || false;
 
   const renderScene = BottomNavigation.SceneMap({
     products: Products,

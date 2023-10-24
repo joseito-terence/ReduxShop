@@ -11,11 +11,16 @@ export default function Products() {
   const dispatch = useAppDispatch();
 
   return (
-    <View style={{ padding: 18 }}>
-      <Text variant="displayMedium" style={{ marginBottom: 16 }}>
+    <View>
+      <Text variant="displayMedium" style={{ padding: 18 }}>
         Products
       </Text>
-      <ScrollView contentContainerStyle={{ rowGap: 16, paddingBottom: 80 }}>
+      <ScrollView
+        contentContainerStyle={{
+          rowGap: 16,
+          paddingBottom: 80,
+          paddingHorizontal: 18,
+        }}>
         {data?.map(product => (
           <Card key={product.id}>
             <Card.Cover source={{ uri: product.image }} resizeMode="contain" />
