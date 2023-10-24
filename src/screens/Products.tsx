@@ -18,6 +18,7 @@ export default function Products() {
       <ScrollView
         contentContainerStyle={{
           rowGap: 16,
+          paddingTop: 20,
           paddingBottom: 80,
           paddingHorizontal: 18,
         }}>
