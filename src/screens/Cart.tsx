@@ -1,13 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import { ScrollView, View, Image } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, Card, Button } from 'react-native-paper';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { removeFromCart } from '../redux/cartSlice';
+import { emptyCart, removeFromCart } from '../redux/cartSlice';
 
 export default function Cart() {
   const dispatch = useAppDispatch();
   const cart = useAppSelector(state => state.cart);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <View>
@@ -19,9 +20,22 @@ export default function Cart() {
           justifyContent: 'space-between',
         }}>
         <Text variant="displayMedium">Cart</Text>
-        <Text variant="titleLarge">
-          ${cart.reduce((acc, curr) => acc + curr.price, 0)}
-        </Text>
+
+        {cart.length !== 0 && (
+          <Button
+            mode="contained"
+            loading={isLoading}
+            onPress={() => {
+              setIsLoading(true);
+              setTimeout(() => {
+                setIsLoading(false);
+                dispatch(emptyCart());
+              }, 1000);
+            }}>
+            Place Order ($
+            {cart.reduce((acc, curr) => acc + curr.price, 0).toFixed(2)})
+          </Button>
+        )}
       </View>
 
       {cart.length === 0 && (
